@@ -2,10 +2,10 @@
 set $mod Mod4
 
 # naming the workspaces
-set $tag1 
+set $tag1 
 set $tag2 
-set $tag3 
-set $tag4 
+set $tag3 
+set $tag4 
 set $tag5 
 set $tag6 
 set $tag7 
@@ -167,7 +167,7 @@ bindsym XF86AudioPrev exec mpc prev
 bindsym XF86Launch1 exec xset dpms force off
 
 assign [class="Google-chrome"] workspace number 2 $tag2
-assign [class="Slack"] workspace number 3 $tag3
+assign [class="Slack"] workspace number 4 $tag4
 
 # KEY BINDINGS
 # start a terminal session
