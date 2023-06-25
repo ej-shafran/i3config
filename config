@@ -6,12 +6,12 @@ set $tag1 
 set $tag2 
 set $tag3 
 set $tag4 
-set $tag5 
+set $tag5 
 set $tag6 
-set $tag7 
-set $tag8 
+set $tag7 󰈻
+set $tag8 󰓎
 set $tag9 
-set $tag0 
+set $tag0 󰌾
 
 # font
 font pango:JetBrains Mono Regular Nerd Font Complete 12
@@ -121,7 +121,7 @@ set $rd     #e89393
 set $id     #1c4a1c
 set $ce     #ceecee
 
-exec --no-startup-id feh --bg-fill ~/Pictures/Wallpapers/csm_background.jpg
+exec --no-startup-id feh ~/Pictures/Wallpapers/csm_background.jpg --bg-fill --auto-zoom
 exec_always --no-startup-id "setxkbmap -layout us,il -option grp:win_space_toggle -model pc10"
 
 exec --no-startup-id ~/.config/i3/bin/bar
@@ -134,37 +134,13 @@ exec --no-startup-id ~/.config/i3/bin/redshift
 
 # clipboard manager
 exec --no-startup-id ~/.config/i3/bin/clipmenud
-bindsym $mod+Insert exec CM_OUTPUT_CLIP=1 ~/.config/i3/bin/clipmenu
 
-# lock screen
-bindsym --release XF86ScreenSaver exec ~/.config/i3/bin/i3lock.sh
-bindsym --release $mod+Delete exec ~/.config/i3/bin/i3lock.sh
-bindsym --release $mod+Mod1+l exec ~/.config/i3/bin/i3lock.sh
-bindsym --release control+Mod1+Delete exec ~/.config/i3/bin/i3lock.sh
+# monitors
+exec_always --no-startup-id ~/.config/i3/bin/monitors.sh
 
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 3%+
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 3%-
-bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle # mute sound
-
-# Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
-
-# Touchpad controls
-bindsym --release XF86Sleep exec ~/.config/i3/bin/i3lock.sh && systemctl suspend
-
-# Screenshot
-bindsym Print exec scrot -e 'mv $f /tmp/'
-bindsym $mod+Print exec gnome-screenshot -i -a
-
-# Media player controls
-bindsym XF86AudioPlay exec mpc toggle
-bindsym XF86AudioPause exec mpc pause
-bindsym XF86AudioNext exec mpc next
-bindsym XF86AudioPrev exec mpc prev
-
-bindsym XF86Launch1 exec xset dpms force off
+# scroll & touchpad
+exec xinput set-prop 11 'Synaptics Scrolling Distance' -223 -223
+exec xinput set-prop 11 'Synaptics Finger' 25 25 25
 
 assign [class="Google-chrome"] workspace number 2 $tag2
 assign [class="Slack"] workspace number 4 $tag4
@@ -264,3 +240,29 @@ bindcode $mod+Shift+60 exec ~/.config/i3/bin/x-register copy
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+bindsym $mod+Insert exec CM_OUTPUT_CLIP=1 ~/.config/i3/bin/clipmenu
+# lock screen
+bindsym --release XF86ScreenSaver exec ~/.config/i3/bin/i3lock.sh
+bindsym --release $mod+Delete exec ~/.config/i3/bin/i3lock.sh
+bindsym --release $mod+Mod1+l exec ~/.config/i3/bin/i3lock.sh
+bindsym --release control+Mod1+Delete exec ~/.config/i3/bin/i3lock.sh
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 3%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 3%-
+bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle # mute sound
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+# Touchpad controls
+bindsym --release XF86Sleep exec ~/.config/i3/bin/i3lock.sh && systemctl suspend
+# Screenshot
+bindsym Print exec scrot -e 'mv $f /tmp/'
+bindsym $mod+Print exec gnome-screenshot -i -a
+# Media player controls
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioPause exec mpc pause
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+bindsym XF86Launch1 exec xset dpms force off
+# Move workspace from screen to screen
+bindsym $mod+p move workspace to output right
