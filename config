@@ -142,6 +142,7 @@ exec xinput set-prop 11 'Synaptics Finger' 25 25 25
 
 assign [class="Google-chrome"] workspace number 2 $tag2
 assign [class="Slack"] workspace number 4 $tag4
+assign [class="obsidian"] workspace number 5 $tag5
 
 # KEY BINDINGS
 # start a terminal session
