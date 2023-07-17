@@ -254,8 +254,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightnes
 # Touchpad controls
 bindsym --release XF86Sleep exec ~/.config/i3/bin/i3lock.sh && systemctl suspend
 # Screenshot
-bindsym Print exec scrot -e 'mv $f /tmp/'
-bindsym $mod+Print exec gnome-screenshot -i -a
+bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/Screenshots/$(date).png"
 # Media player controls
 bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioPause exec mpc pause
