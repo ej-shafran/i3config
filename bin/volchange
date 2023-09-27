@@ -1,0 +1,37 @@
+#!/bin/sh
+
+CURVOL=
+ICON=
+
+if [ $# -ne 1 ]; then
+    echo "Need 1 argument (up, down, mute)"
+    exit 1;
+fi
+
+getnewvol() {
+    CURVOL=$(pactl list sinks | grep -i volume | head -1 | awk '{print $5}' | sed -e 's/%//')
+
+    if [ "$CURVOL" -gt 75 ]; then
+        ICON="high"
+    elif [ "$CURVOL" -gt 35 ]; then
+        ICON="medium"
+    elif [ "$CURVOL" -gt 0 ]; then
+        ICON="low"
+    fi
+
+}
+if [ "$1" = "up" ]; then
+    amixer -q -D pulse sset Master 3%+
+    getnewvol
+elif [ "$1" = "down" ]; then
+    amixer -q -D pulse sset Master 3%-
+    getnewvol
+elif [ "$1" = "mute" ]; then
+    amixer -q -D pulse sset Master toggle
+    getnewvol
+    if [ "$(pactl list sinks  | grep Mute | awk '{print $2}')" = "yes" ]; then
+        ICON="muted"
+    fi
+fi
+
+notify-send "Volume changed" --hint="int:value:$CURVOL" -i "$HOME/.config/dunst/volume-$ICON.png"

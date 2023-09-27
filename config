@@ -247,9 +247,9 @@ bindsym --release $mod+Delete exec ~/.config/i3/bin/i3lock.sh
 bindsym --release $mod+Mod1+l exec ~/.config/i3/bin/i3lock.sh
 bindsym --release control+Mod1+Delete exec ~/.config/i3/bin/i3lock.sh
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 3%+
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 3%-
-bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/bin/volchange up
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/bin/volchange down
+bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/bin/volchange mute
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
