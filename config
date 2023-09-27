@@ -2,16 +2,16 @@
 set $mod Mod4
 
 # naming the workspaces
-set $tag1 
-set $tag2 
-set $tag3 
-set $tag4 
-set $tag5 
-set $tag6 
-set $tag7 󰈻
+set $tag1 
+set $tag2 
+set $tag3 
+set $tag4 󰭹
+set $tag5 󱞂
+set $tag6 󰡉
+set $tag7 󰋋
 set $tag8 󰓎
-set $tag9 
-set $tag0 󰌾
+set $tag9 󰷏
+set $tag0 
 
 # font
 font pango:JetBrains Mono Regular Nerd Font Complete 12
