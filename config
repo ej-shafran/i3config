@@ -161,10 +161,12 @@ assign [class="Spotify"] workspace number 7 $tag7
 bindsym $mod+Return exec kitty
 # kill focused window
 bindsym $mod+Shift+q kill
-# dmenu
-bindsym $mod+Shift+d exec dmenu_run
-# dmenu wrapper for desktop
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# rofi (replacement for dmenu)
+bindsym $mod+Shift+d exec rofi -show run
+# rofi only for desktop apps
+bindsym $mod+d exec --no-startup-id rofi -show drun
+# application menu
+bindsym $mod+z exec jgmenu_run
 # workspace toggle 
 bindsym $mod+Tab workspace back_and_forth
 bindsym Mod1+Tab workspace back_and_forth
@@ -203,7 +205,7 @@ bindsym $mod+Shift+f floating toggle
 # focus the parent container
 bindsym $mod+a focus parent
 # focus the child container
-bindsym $mod+z focus child
+bindsym $mod+c focus child
 # $mod+= = focus urgent latest 
 bindcode $mod+21 [urgent=latest] focus
 # scratchpad
