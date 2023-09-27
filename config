@@ -16,7 +16,8 @@ set $tag0 
 # font
 font pango:JetBrains Mono Regular Nerd Font Complete 12
 
-new_window pixel 2
+new_window none
+default_border none
 
 # Mouse+$mod = drag floating windows to their wanted position
 floating_modifier $mod
