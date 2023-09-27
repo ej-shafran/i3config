@@ -130,7 +130,7 @@ bar {
 }
 
 exec_always --no-startup-id ~/.screenlayout/default.sh
-exec --no-startup-id feh ~/Pictures/Wallpapers/csm_background.jpg --bg-fill --auto-zoom
+exec --no-startup-id feh ~/Pictures/Wallpapers/mononoke.jpg --bg-fill --auto-zoom
 exec_always --no-startup-id "setxkbmap -layout us,il -option grp:win_space_toggle -model pc10"
 
 exec --no-startup-id ~/.config/i3/bin/bar
