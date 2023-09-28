@@ -11,6 +11,7 @@ COLOR=
 CODE=0
 
 if [ "$CURBATTERY" -lt 10 ]; then
+  notify-send "Low battery" "Connect to a charger" --urgency critical
   ICON=󰂃
   COLOR="#f7768e"
   CODE=33
