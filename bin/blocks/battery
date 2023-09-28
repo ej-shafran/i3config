@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+CURBATTERY=
+BATTERY_INFO="$(upower -i "$(upower -e | grep BAT1 | head -n1)")"
+STATUS="$(echo "$BATTERY_INFO" | grep -E "state" | sed 's/\s*state:\s*\(.*\)$/\1/')"
+CURBATTERY="$(echo "$BATTERY_INFO" | grep -E "percentage" | sed 's/\s*percentage:\s*\(.*\)%$/\1/')"
+CURBATTERY=$(( "$CURBATTERY" ))
+
+ICON=
+COLOR=
+CODE=0
+
+if [ "$CURBATTERY" -lt 10 ]; then
+  ICON=󰂃
+  COLOR="#f7768e"
+  CODE=33
+elif [ "$CURBATTERY" -lt 35 ]; then
+  ICON=󰁻
+  COLOR="#f7768e"
+elif [ "$CURBATTERY" -lt 60 ]; then
+  ICON=󰁾
+  COLOR="#e0af68"
+else
+  ICON=󰂂
+  COLOR="#73daca"
+fi
+
+if [ "$STATUS" = "charging" ]; then
+    ICON=󰂄
+fi
+
+echo "$ICON $CURBATTERY%"
+echo
+echo "$COLOR"
+
+exit $CODE

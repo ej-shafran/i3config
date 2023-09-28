@@ -137,12 +137,10 @@ exec --no-startup-id feh ~/Pictures/Wallpapers/mononoke.jpg --bg-fill --auto-zoo
 exec_always --no-startup-id "setxkbmap -layout us,il -option grp:win_space_toggle -model pc10"
 
 exec --no-startup-id $bin/bar
-exec --no-startup-id $bin/xinput-fix
 exec --no-startup-id dunst
 exec --no-startup-id ibus-daemon --xim -d -r
 exec --no-startup-id dconf write /desktop/ibus/general/engines-order "['xkb:us::eng', 'Unikey']"
-exec --no-startup-id xautolock -time 5 -locker '$bin/i3lock.sh'
-exec --no-startup-id $bin/redshift
+exec --no-startup-id xautolock -time 5 -locker $bin/i3lock.sh
 
 # clipboard manager
 exec --no-startup-id $bin/clipmenud
@@ -249,9 +247,6 @@ bindsym $mod+Shift+i exec i3-input -F "move container to workspace \"%s\"" -P 'M
 # mark container
 bindsym $mod+m exec i3-input -F 'mark %s' -P 'Mark name: '
 bindsym $mod+Shift+m exec i3-input -F '[con_mark=%s] focus' -P 'Go to mark: '
-# copy to register ($mod+., $mod+Shift+.)
-bindcode $mod+60 exec $bin/x-register
-bindcode $mod+Shift+60 exec $bin/x-register copy
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -260,15 +255,13 @@ bindsym $mod+Insert exec CM_OUTPUT_CLIP=1 $bin/clipmenu
 # lock screen
 bindsym --release XF86ScreenSaver exec $bin/i3lock.sh
 bindsym --release $mod+Delete exec $bin/i3lock.sh
-bindsym --release $mod+Mod1+l exec $bin/i3lock.sh
-bindsym --release control+Mod1+Delete exec $bin/i3lock.sh
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id $bin/volchange up
 bindsym XF86AudioLowerVolume exec --no-startup-id $bin/volchange down
 bindsym XF86AudioMute exec --no-startup-id $bin/volchange mute
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec $bin/brightness up
-bindsym XF86MonBrightnessDown exec $bin/brightness down
+bindsym XF86MonBrightnessUp exec $bin/brightcontrol up
+bindsym XF86MonBrightnessDown exec $bin/brightcontrol down
 # Touchpad controls
 bindsym --release XF86Sleep exec $bin/i3lock.sh && systemctl suspend
 # Screenshot

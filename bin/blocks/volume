@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+CURVOLUME=
+ICON=
+
+if [[ -z "$MIXER" ]] ; then
+    MIXER="default"
+    if command -v pulseaudio >/dev/null 2>&1 && pulseaudio --check ; then
+        # pulseaudio is running, but not all installations use "pulse"
+        if amixer -D pulse info >/dev/null 2>&1 ; then
+            MIXER="pulse"
+        fi
+    fi
+    [ -n "$(lsmod | grep jack)" ] && MIXER="jackplug"
+    MIXER="${2:-$MIXER}"
+fi
+
+if [[ -z "$SCONTROL" ]] ; then
+    SCONTROL="${BLOCK_INSTANCE:-$(amixer -D $MIXER scontrols |
+                      sed -n "s/Simple mixer control '\([^']*\)',0/\1/p" |
+                      head -n1
+                    )}"
+fi
+
+# AMIXER(1):
+# "Use the mapped volume for evaluating the percentage representation like alsamixer, to be
+# more natural for human ear."
+NATURAL_MAPPING=${NATURAL_MAPPING:-0}
+if [[ "$NATURAL_MAPPING" != "0" ]] ; then
+    AMIXER_PARAMS="-M"
+fi
+
+getvolume() {
+  # will be "Capture" if the device is a capture device
+  CAPABILITY="$(amixer $AMIXER_PARAMS -D "$MIXER" get "$SCONTROL" | sed -n "s/  Capabilities:.*cvolume.*/Capture/p")"
+  CURVOLUME="$(amixer $AMIXER_PARAMS -D "$MIXER" get "$SCONTROL" "$CAPABILITY")"
+  perl_filter='if (/.*\[(\d+%)\] (\[(-?\d+.\d+dB)\] )?\[(on|off)\]/)'
+  perl_filter+='{CORE::say $4 eq "off" ? "MUTE" : "'
+  # If dB was selected, print that instead
+  perl_filter+=$([[ $STEP = *dB ]] && echo '$3' || echo '$1')
+  perl_filter+='"; exit}'
+  CURVOLUME=$(echo "$CURVOLUME" | perl -ne "$perl_filter")
+  CURVOLUME="${CURVOLUME/\%/}"
+}
+
+case $BLOCK_BUTTON in
+  3) ~/.config/i3/bin/volchange mute;;
+  4) ~/.config/i3/bin/volchange up;;
+  5) ~/.config/i3/bin/volchange down;;
+esac
+
+getvolume
+
+if [ "$CURVOLUME" -lt 35 ]; then
+  ICON=󰕿
+elif [ "$CURVOLUME" -lt 76 ]; then
+  ICON=󰖀
+else
+  ICON=󰕾
+fi
+
+if [ "$CURVOLUME" = "MUTE" ]; then
+  ICON=󰝟
+else
+  CURVOLUME="$CURVOLUME%"
+fi
+
+echo "$ICON $CURVOLUME"

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+ICON=
+CURBRIGHTNESS=
+
+getbrightness() {
+    CURBRIGHTNESS="$(xbacklight -get)"
+    CURBRIGHTNESS="${CURBRIGHTNESS%.*}"
+
+    if [ "$CURBRIGHTNESS" -gt 75 ]; then
+        ICON=󰃞
+    elif [ "$CURBRIGHTNESS" -gt 35 ]; then
+        ICON=󰃝
+    else
+        ICON=󰃠
+    fi
+}
+
+case $BLOCK_BUTTON in
+  4) ~/.config/i3/bin/brightcontrol up;;
+  5) ~/.config/i3/bin/brightcontrol down;;
+esac
+
+getbrightness
+echo "$ICON $CURBRIGHTNESS%"
