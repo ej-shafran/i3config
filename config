@@ -13,6 +13,9 @@ set $tag8 󰓎
 set $tag9 󰷏
 set $tag0 
 
+# binary folder
+set $bin ~/.config/i3/bin
+
 # font
 font pango:JetBrains Mono Regular Nerd Font Complete 12
 
@@ -26,9 +29,9 @@ floating_modifier $mod
 focus_follows_mouse no
 
 mode "(l)ock (s)leep (h)ybernate (r)eboot (p)oweroff (e)xit-i3" {
-        bindsym l exec ~/.config/i3/bin/i3lock.sh; mode "default"
-        bindsym s exec ~/.config/i3/bin/i3lock.sh && systemctl suspend; mode "default"
-        bindsym h exec ~/.config/i3/bin/i3lock.sh && systemctl hibernate; mode "default"
+        bindsym l exec $bin/i3lock.sh; mode "default"
+        bindsym s exec $bin/i3lock.sh && systemctl suspend; mode "default"
+        bindsym h exec $bin/i3lock.sh && systemctl hibernate; mode "default"
         bindsym p exec systemctl poweroff; mode "default"
         bindsym r exec systemctl reboot; mode "default"
         bindsym e exec --no-startup-id i3-msg exit; mode "default"
@@ -133,16 +136,16 @@ exec_always --no-startup-id ~/.screenlayout/default.sh
 exec --no-startup-id feh ~/Pictures/Wallpapers/mononoke.jpg --bg-fill --auto-zoom
 exec_always --no-startup-id "setxkbmap -layout us,il -option grp:win_space_toggle -model pc10"
 
-exec --no-startup-id ~/.config/i3/bin/bar
-exec --no-startup-id ~/.config/i3/bin/xinput-fix
+exec --no-startup-id $bin/bar
+exec --no-startup-id $bin/xinput-fix
 exec --no-startup-id dunst
 exec --no-startup-id ibus-daemon --xim -d -r
 exec --no-startup-id dconf write /desktop/ibus/general/engines-order "['xkb:us::eng', 'Unikey']"
-exec --no-startup-id xautolock -time 5 -locker '~/.config/i3/bin/i3lock.sh'
-exec --no-startup-id ~/.config/i3/bin/redshift
+exec --no-startup-id xautolock -time 5 -locker '$bin/i3lock.sh'
+exec --no-startup-id $bin/redshift
 
 # clipboard manager
-exec --no-startup-id ~/.config/i3/bin/clipmenud
+exec --no-startup-id $bin/clipmenud
 
 # scroll & touchpad
 exec xinput set-prop 11 'Synaptics Scrolling Distance' -223 -223
@@ -234,10 +237,10 @@ bindsym $mod+Shift+8 move container to workspace number 8 $tag8
 bindsym $mod+Shift+9 move container to workspace number 9 $tag9
 bindsym $mod+Shift+0 move container to workspace $tag0
 # rename workspace
-bindsym $mod+t exec ~/.config/i3/bin/tags num
-bindsym $mod+Shift+t exec ~/.config/i3/bin/tags
-bindsym $mod+n exec ~/.config/i3/bin/tags temp
-bindsym $mod+Shift+n exec ~/.config/i3/bin/tags temp-move
+bindsym $mod+t exec $bin/tags num
+bindsym $mod+Shift+t exec $bin/tags
+bindsym $mod+n exec $bin/tags temp
+bindsym $mod+Shift+n exec $bin/tags temp-move
 # reminder
 bindsym $mod+apostrophe exec i3-input -F "exec sh -c 'sleep %s && notify-send Remember-%ss-ago!'" -P 'Remind after: '
 # [move to] new workspace
@@ -247,27 +250,27 @@ bindsym $mod+Shift+i exec i3-input -F "move container to workspace \"%s\"" -P 'M
 bindsym $mod+m exec i3-input -F 'mark %s' -P 'Mark name: '
 bindsym $mod+Shift+m exec i3-input -F '[con_mark=%s] focus' -P 'Go to mark: '
 # copy to register ($mod+., $mod+Shift+.)
-bindcode $mod+60 exec ~/.config/i3/bin/x-register
-bindcode $mod+Shift+60 exec ~/.config/i3/bin/x-register copy
+bindcode $mod+60 exec $bin/x-register
+bindcode $mod+Shift+60 exec $bin/x-register copy
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-bindsym $mod+Insert exec CM_OUTPUT_CLIP=1 ~/.config/i3/bin/clipmenu
+bindsym $mod+Insert exec CM_OUTPUT_CLIP=1 $bin/clipmenu
 # lock screen
-bindsym --release XF86ScreenSaver exec ~/.config/i3/bin/i3lock.sh
-bindsym --release $mod+Delete exec ~/.config/i3/bin/i3lock.sh
-bindsym --release $mod+Mod1+l exec ~/.config/i3/bin/i3lock.sh
-bindsym --release control+Mod1+Delete exec ~/.config/i3/bin/i3lock.sh
+bindsym --release XF86ScreenSaver exec $bin/i3lock.sh
+bindsym --release $mod+Delete exec $bin/i3lock.sh
+bindsym --release $mod+Mod1+l exec $bin/i3lock.sh
+bindsym --release control+Mod1+Delete exec $bin/i3lock.sh
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/bin/volchange up
-bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/bin/volchange down
-bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/bin/volchange mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id $bin/volchange up
+bindsym XF86AudioLowerVolume exec --no-startup-id $bin/volchange down
+bindsym XF86AudioMute exec --no-startup-id $bin/volchange mute
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec $bin/brightness up
+bindsym XF86MonBrightnessDown exec $bin/brightness down
 # Touchpad controls
-bindsym --release XF86Sleep exec ~/.config/i3/bin/i3lock.sh && systemctl suspend
+bindsym --release XF86Sleep exec $bin/i3lock.sh && systemctl suspend
 # Screenshot
 bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/Screenshots/$(date).png"
 # Media player controls

@@ -5,17 +5,17 @@ ICON=
 
 if [ $# -ne 1 ]; then
     echo "Need 1 argument (up, down, mute)"
-    exit 1;
+    exit 1
 fi
 
 getnewvol() {
-    CURVOL=$(pactl list sinks | grep -i volume | head -1 | awk '{print $5}' | sed -e 's/%//')
+    CURVOL="$(pactl list sinks | grep -i volume | head -1 | awk '{print $5}' | sed -e 's/%//')"
 
     if [ "$CURVOL" -gt 75 ]; then
         ICON="high"
     elif [ "$CURVOL" -gt 35 ]; then
         ICON="medium"
-    elif [ "$CURVOL" -gt 0 ]; then
+    else
         ICON="low"
     fi
 
@@ -34,4 +34,5 @@ elif [ "$1" = "mute" ]; then
     fi
 fi
 
-notify-send "Volume changed" --hint="int:value:$CURVOL" -i "$HOME/.config/dunst/volume-$ICON.png"
+notify-send "Volume changed" \
+    --hint="int:value:$CURVOL" -i "$HOME/.config/dunst/volume-$ICON.png"
