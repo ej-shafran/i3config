@@ -11,23 +11,36 @@ COLOR=
 CODE=0
 
 if [ "$CURBATTERY" -lt 10 ]; then
-  notify-send "Low battery" "Connect to a charger" --urgency critical
-  ICON=󰂃
+  if [ "$STATUS" != "charging" ]; then
+    notify-send "Low battery" "Connect to a charger" --urgency critical
+    ICON=󰂎
+    CODE=33
+  else
+    ICON=󰢟
+  fi
+
   COLOR="#f7768e"
-  CODE=33
 elif [ "$CURBATTERY" -lt 35 ]; then
-  ICON=󰁻
+  if [ "$STATUS" != "charging" ]; then
+    ICON=󰁻
+  else
+    ICON=󰂆
+  fi
   COLOR="#f7768e"
 elif [ "$CURBATTERY" -lt 60 ]; then
-  ICON=󰁾
+  if [ "$STATUS" != "charging" ]; then
+    ICON=󰁾
+  else
+    ICON=󰢝
+  fi
   COLOR="#e0af68"
 else
-  ICON=󰂂
+  if [ "$STATUS" != "charging" ]; then
+    ICON=󰂂
+  else
+    ICON=󰂋
+  fi
   COLOR="#73daca"
-fi
-
-if [ "$STATUS" = "charging" ]; then
-    ICON=󰂄
 fi
 
 echo "$ICON $CURBATTERY%"
