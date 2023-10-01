@@ -90,10 +90,6 @@ bar {
         }
 }
 
-exec_always --no-startup-id ~/.screenlayout/default.sh
-exec --no-startup-id feh ~/Pictures/Wallpapers/mononoke.jpg --bg-fill --auto-zoom
-exec_always --no-startup-id "setxkbmap -layout us,il -option grp:win_space_toggle -model pc10"
-
 exec --no-startup-id $bin/bar
 exec --no-startup-id dunst
 exec --no-startup-id ibus-daemon --xim -d -r
@@ -102,10 +98,14 @@ exec --no-startup-id xautolock -time 5 -locker $bin/i3lock.sh
 
 # clipboard manager
 exec --no-startup-id $bin/clipmenud
-
 # scroll & touchpad
-exec xinput set-prop 11 'Synaptics Scrolling Distance' -223 -223
-exec xinput set-prop 11 'Synaptics Finger' 25 25 25
+exec $bin/touchpad
+# screen layout
+exec_always --no-startup-id ~/.screenlayout/default.sh
+# background
+exec_always --no-startup-id feh ~/Pictures/Wallpapers/background.jpg --bg-fill --auto-zoom
+# languages
+exec_always --no-startup-id "setxkbmap -layout us,il -option grp:win_space_toggle -model pc10"
 
 assign [class="kitty"] workspace number 1 $tag1
 assign [class="Google-chrome"] workspace number 2 $tag2
